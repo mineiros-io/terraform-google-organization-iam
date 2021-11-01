@@ -51,9 +51,9 @@ Most basic usage just setting required arguments:
 module "terraform-google-organization-iam" {
   source = "github.com/mineiros-io/terraform-google-organization-iam?ref=v0.1.0"
 
-  org_id         = "your-organization-id"
-  role           = "roles/editor"
-  members        = ["user:member@example.com"]
+  org_id  = "your-organization-id"
+  role    = "roles/editor"
+  members = ["user:member@example.com"]
 }
 ```
 
@@ -89,7 +89,7 @@ See [variables.tf] and [examples/] for details and use-cases.
 
   The organization ID. If not specified, terraform uses the ID of the organization configured with the provider.
 
-- **`members`**: **_(Optional `string`)_
+- **`members`**: _(Optional `string`)_
 
   Identities that will be granted the privilege in role. Each entry can have one of the following values:
   - `user:{emailid}`: An email address that represents a specific Google account. For example, alice@gmail.com or joe@example.com.
