@@ -6,7 +6,7 @@
 
 # terraform-google-organization-iam
 
-A [Terraform] module for [Google Cloud Platform (GCP)][gcp].
+A [Terraform](https://www.terraform.io) module to create a [Google Organization IAM](https://cloud.google.com/resource-manager/docs/access-control-org) on [Google Cloud Services (GCP)](https://cloud.google.com/).
 
 **_This module supports Terraform version 1
 and is compatible with the Terraform Google Provider version 3._**
@@ -86,7 +86,7 @@ See [variables.tf] and [examples/] for details and use-cases.
 
   The organization ID. If not specified, terraform uses the ID of the organization configured with the provider.
 
-- **`members`**: _(Optional `string`)_
+- **`members`**: _(Optional `set(string)`)_
 
   Identities that will be granted the privilege in role. Each entry can have one of the following values:
   - `user:{emailid}`: An email address that represents a specific Google account. For example, alice@gmail.com or joe@example.com.
@@ -102,40 +102,13 @@ See [variables.tf] and [examples/] for details and use-cases.
 
 - **`project`**: _(Optional `string`)_
 
-  The resource name of the project the policy is attached to. Its format is `projects/{project_id}`.
+  The ID of the project in which the resource belongs. If it is not provided, the project will be parsed from the identifier of the parent resource. If no project is provided in the parent identifier and no project is specified, the provider project is used.
 
 - **`authoritative`**: _(Optional `bool`)_
 
   Whether to exclusively set (authoritative mode) or add (non-authoritative/additive mode) members to the role.
 
   Default is `true`.
-
-- **`condition`**: _(Optional `object(condition)`)_
-
-  An IAM Condition for a given binding.
-
-  Example
-
-  ```hcl
-  condition = {
-    expression = "request.time < timestamp(\"2022-01-01T00:00:00Z\")"
-    title      = "expires_after_2021_12_31"
-  }
-  ```
-
-A `condition` object accepts the following fields:
-
-- **`expression`**: **_(Required `string`)_**
-
-  Textual representation of an expression in Common Expression Language syntax.
-
-- **`title`**: **_(Required `string`)_**
-
-  A title for the expression, i.e. a short string describing its purpose.
-
-- **`description`**: _(Optional `string`)_
-
-  An optional description of the expression. This is a longer text which describes the expression, e.g. when hovered over it in a UI.
 
 - **`policy_bindings`**: _(Optional `list(policy_bindings)`)_
 
@@ -156,7 +129,7 @@ A `condition` object accepts the following fields:
 
     The role that should be applied.
 
-  - **`members`**: **_(Required `string`)_**
+  - **`members`**: _(Optional `set(string)`)_
 
     Identities that will be granted the privilege in `role`.
 
@@ -175,19 +148,19 @@ A `condition` object accepts the following fields:
     }
     ```
 
-  A `condition` object accepts the following fields:
+    A `condition` object accepts the following fields:
 
-  - **`expression`**: **_(Required `string`)_**
+    - **`expression`**: **_(Required `string`)_**
 
-    Textual representation of an expression in Common Expression Language syntax.
+      Textual representation of an expression in Common Expression Language syntax.
 
-  - **`title`**: **_(Required `string`)_**
+    - **`title`**: **_(Required `string`)_**
 
-    A title for the expression, i.e. a short string describing its purpose.
+      A title for the expression, i.e. a short string describing its purpose.
 
-  - **`description`**: _(Optional `string`)_
+    - **`description`**: _(Optional `string`)_
 
-    An optional description of the expression. This is a longer text which describes the expression, e.g. when hovered over it in a UI.
+      An optional description of the expression. This is a longer text which describes the expression, e.g. when hovered over it in a UI.
 
 #### Extended Resource Configuration
 
