@@ -47,6 +47,12 @@ variable "condition" {
   default     = null
 }
 
+variable "audit_configs" {
+  type        = any
+  description = "(Optional) A list of Audit Logs configurations."
+  default     = []
+}
+
 # ------------------------------------------------------------------------------
 # MODULE CONFIGURATION PARAMETERS
 # These variables are used to configure the module.
