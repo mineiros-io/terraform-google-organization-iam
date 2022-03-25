@@ -16,6 +16,7 @@ variable "org_id" {
 variable "role" {
   type        = string
   description = "(Optional) The role that should be applied. Only one google_project_iam_binding can be used per role. Note that custom roles must be of the format organizations/{{org_id}}/roles/{{role_id}}."
+  default     = null
 }
 
 variable "members" {

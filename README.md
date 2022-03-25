@@ -50,7 +50,7 @@ Most basic usage just setting required arguments:
 
 ```hcl
 module "terraform-google-organization-iam" {
-  source = "github.com/mineiros-io/terraform-google-organization-iam?ref=v0.0.2"
+  source = "github.com/mineiros-io/terraform-google-organization-iam?ref=v0.0.4"
 
   org_id  = "your-organization-id"
   role    = "roles/editor"
@@ -166,7 +166,7 @@ See [variables.tf] and [examples/] for details and use-cases.
 
       An optional description of the expression. This is a longer text which describes the expression, e.g. when hovered over it in a UI.
 
-- [**`audit_configs`**](#var-audit_configs): *(Optional `object(audit_log)`)*<a name="var-audit_configs"></a>
+- [**`audit_configs`**](#var-audit_configs): *(Optional `object(audit_config)`)*<a name="var-audit_configs"></a>
 
   List of audit logs settings to be enabled.
 
@@ -191,7 +191,7 @@ See [variables.tf] and [examples/] for details and use-cases.
   ]
   ```
 
-  The `audit_log` object accepts the following attributes:
+  The `audit_config` object accepts the following attributes:
 
   - [**`service`**](#attr-audit_configs-service): *(**Required** `string`)*<a name="attr-audit_configs-service"></a>
 
