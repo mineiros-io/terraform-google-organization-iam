@@ -7,9 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.4]
+
+### Fixed
+
+- Allow to only create audit configs (without defining IAM bindings or memberships)
+
 ## [0.0.3]
 
 ### Added
+
 - Add support for `google_project_iam_audit_config` resource
 
 ## [0.0.2]
@@ -25,7 +32,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial Implementation
 
-[unreleased]: https://github.com/mineiros-io/terraform-google-organization-iam/compare/v0.0.3...HEAD
+[unreleased]: https://github.com/mineiros-io/terraform-google-organization-iam/compare/v0.0.4...HEAD
+[0.0.4]: https://github.com/mineiros-io/terraform-google-organization-iam/compare/v0.0.3...v0.0.4
 [0.0.3]: https://github.com/mineiros-io/terraform-google-organization-iam/compare/v0.0.2...v0.0.3
 [0.0.2]: https://github.com/mineiros-io/terraform-google-organization-iam/compare/v0.0.1...v0.0.2
 [0.0.1]: https://github.com/mineiros-io/terraform-google-organization-iam/releases/tag/v0.0.1

@@ -50,7 +50,7 @@ Most basic usage just setting required arguments:
 
 ```hcl
 module "terraform-google-organization-iam" {
-  source = "github.com/mineiros-io/terraform-google-organization-iam?ref=v0.0.2"
+  source = "github.com/mineiros-io/terraform-google-organization-iam?ref=v0.0.4"
 
   org_id  = "your-organization-id"
   role    = "roles/editor"
