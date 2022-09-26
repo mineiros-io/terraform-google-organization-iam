@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Add support for `var.computed_members_map`
+- Add support for audit log in policy bindings
+
+### Removed
+
+- BREAKING CHANGES: Remove fallback to `var.members` in policy bindings
+
 ## [0.0.4]
 
 ### Fixed
