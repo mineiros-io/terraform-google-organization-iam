@@ -19,16 +19,3 @@ output "iam" {
   description = "All attributes of the created 'iam_binding' or 'iam_member' or 'iam_policy' resource according to the mode."
   value       = local.iam_output[local.iam_output_index]
 }
-
-# ------------------------------------------------------------------------------
-# OUTPUT ALL INPUT VARIABLES
-# ------------------------------------------------------------------------------
-
-# ------------------------------------------------------------------------------
-# OUTPUT MODULE CONFIGURATION
-# ------------------------------------------------------------------------------
-
-output "module_enabled" {
-  description = "Whether the module is enabled."
-  value       = var.module_enabled
-}
