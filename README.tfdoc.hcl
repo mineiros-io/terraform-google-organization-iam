@@ -65,7 +65,7 @@ section {
 
       ```hcl
       module "terraform-google-organization-iam" {
-        source = "github.com/mineiros-io/terraform-google-organization-iam?ref=v0.0.4"
+        source = "github.com/mineiros-io/terraform-google-organization-iam?ref=v0.0.5"
 
         org_id  = "your-organization-id"
         role    = "roles/editor"
