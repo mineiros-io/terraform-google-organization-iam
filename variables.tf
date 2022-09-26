@@ -25,8 +25,19 @@ variable "members" {
   default     = []
 
   validation {
-    condition     = alltrue([for m in var.members : can(regex("^(allUsers|allAuthenticatedUsers|(user|serviceAccount|group|domain):)", m))])
-    error_message = "The value must be a non-empty list of strings where each entry is a valid principal type identified with `allUsers`, `allAuthenticatedUsers` or prefixed with `user:`, `serviceAccount:`, `group:` or `domain:`."
+    condition     = alltrue([for m in var.members : can(regex("^(allUsers|allAuthenticatedUsers|(user|serviceAccount|group|domain|computed):)", m))])
+    error_message = "The value must be a non-empty list of strings where each entry is a valid principal type identified with `allUsers`, `allAuthenticatedUsers` or prefixed with `user:`, `serviceAccount:`, `group:`, `domain:` or `computed`."
+  }
+}
+
+variable "computed_members_map" {
+  type        = map(string)
+  description = "(Optional) A map of members to replace in 'var.members' or in members of 'var.policy_bindings' to handle terraform computed values."
+  default     = {}
+
+  validation {
+    condition     = alltrue([for k, v in var.computed_members_map : can(regex("^(allUsers|allAuthenticatedUsers|(user|serviceAccount|group|domain):)", v))])
+    error_message = "The value must be a non-empty string being a valid principal type identified with `allUsers`, `allAuthenticatedUsers` or prefixed with `user:`, `serviceAccount:`, `group:`, or `domain:`."
   }
 }
 
@@ -37,8 +48,8 @@ variable "authoritative" {
 }
 
 variable "policy_bindings" {
-  description = "(Optional) A list of IAM policy bindings."
   type        = any
+  description = "(Optional) A list of IAM policy bindings."
   default     = null
 }
 

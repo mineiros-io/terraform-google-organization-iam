@@ -14,7 +14,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
-- BREAKING CHANGES: Remove fallback to `var.members` in policy bindings
+- BREAKING: Remove fallback to `var.members` in policy bindings
+- BREAKING: Remove support for Terraform versions before v1.0
+- BREAKING: Remove support for Terraform Google Provider versions before v4.0
 
 ## [0.0.4]
 

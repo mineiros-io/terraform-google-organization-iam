@@ -6,9 +6,9 @@
 # OUTPUT ALL RESOURCES AS FULL OBJECTS
 # ------------------------------------------------------------------------------
 locals {
-  binding = try(google_organization_iam_binding.binding[0], null)
-  member  = try(google_organization_iam_member.member, null)
-  policy  = try(google_organization_iam_policy.policy[0], null)
+  binding = one(google_organization_iam_binding.binding)
+  member  = google_organization_iam_member.member
+  policy  = one(google_organization_iam_policy.policy)
 
   iam_output = [local.binding, local.member, local.policy]
 
