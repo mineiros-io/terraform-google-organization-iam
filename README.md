@@ -88,7 +88,7 @@ See [variables.tf] and [examples/] for details and use-cases.
 
 - [**`org_id`**](#var-org_id): *(**Required** `string`)*<a name="var-org_id"></a>
 
-  The organization ID. If not specified, terraform uses the ID of the organization configured with the provider.
+  The ID of the organization.
 
 - [**`members`**](#var-members): *(Optional `set(string)`)*<a name="var-members"></a>
 
@@ -97,16 +97,20 @@ See [variables.tf] and [examples/] for details and use-cases.
   - `serviceAccount:{emailid}`: An email address that represents a service account. For example, my-other-app@appspot.gserviceaccount.com.
   - `group:{emailid}`: An email address that represents a Google group. For example, admins@example.com.
   - `domain:{domain}`: A G Suite domain (primary, instead of alias) name that represents all the users of that domain. For example, google.com or example.com.
+  - `computed:{identifier}`: An existing key from var.computed_members_map.
 
   Default is `[]`.
+
+- [**`computed_members_map`**](#var-computed_members_map): *(Optional `map(string)`)*<a name="var-computed_members_map"></a>
+
+  A map of identifiers to identities to be replaced in 'var.members' or in members of `policy_bindings` to handle terraform computed values.
+  The format of each value must satisfy the format as described in `var.members`.
+
+  Default is `{}`.
 
 - [**`role`**](#var-role): *(Optional `string`)*<a name="var-role"></a>
 
   The role that should be applied. Note that custom roles must be of the format `[projects|organizations]/{parent-name}/roles/{role-name}`.
-
-- [**`project`**](#var-project): *(Optional `string`)*<a name="var-project"></a>
-
-  The ID of the project in which the resource belongs. If it is not provided, the project will be parsed from the identifier of the parent resource. If no project is provided in the parent identifier and no project is specified, the provider project is used.
 
 - [**`authoritative`**](#var-authoritative): *(Optional `bool`)*<a name="var-authoritative"></a>
 
@@ -166,6 +170,19 @@ See [variables.tf] and [examples/] for details and use-cases.
 
       An optional description of the expression. This is a longer text which describes the expression, e.g. when hovered over it in a UI.
 
+- [**`condition`**](#var-condition): *(Optional `object(condition)`)*<a name="var-condition"></a>
+
+  An IAM Condition for a given binding.
+
+  Example:
+
+  ```hcl
+  condition = {
+    expression = "request.time < timestamp(\"2022-01-01T00:00:00Z\")"
+    title      = "expires_after_2021_12_31"
+  }
+  ```
+
 - [**`audit_configs`**](#var-audit_configs): *(Optional `object(audit_config)`)*<a name="var-audit_configs"></a>
 
   List of audit logs settings to be enabled.
@@ -176,7 +193,7 @@ See [variables.tf] and [examples/] for details and use-cases.
   audit_configs = [
     {
       service = "allServices"
-      configs = [
+      audit_log_configs = [
         {
           log_type = "DATA_READ"
         },
@@ -197,7 +214,10 @@ See [variables.tf] and [examples/] for details and use-cases.
 
     Service which will be enabled for audit logging.
     The special value `allServices` covers all services.
-    Note that if there are `google_organization_iam_audit_config` resources covering both `allServices` and a specific service then the union of the two AuditConfigs is used for that service: the `log_types` specified in each `audit_log_config` are enabled, and the `exempted_members` in each `audit_log_config` are exempted.
+    Note that if there are `audit_configs` covering both `allServices` and a specific service
+    then the union of the two `audit_configs` is used for that service:
+    the `log_types` specified in each `audit_log_config` are enabled,
+    and the `exempted_members` in each `audit_log_config` are exempted.
 
   - [**`audit_log_configs`**](#attr-audit_configs-audit_log_configs): *(**Required** `list(audit_log_config)`)*<a name="attr-audit_configs-audit_log_configs"></a>
 

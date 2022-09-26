@@ -115,7 +115,7 @@ section {
           required    = true
           type        = string
           description = <<-END
-            The organization ID. If not specified, terraform uses the ID of the organization configured with the provider.
+            The ID of the organization.
           END
         }
 
@@ -128,20 +128,33 @@ section {
             - `serviceAccount:{emailid}`: An email address that represents a service account. For example, my-other-app@appspot.gserviceaccount.com.
             - `group:{emailid}`: An email address that represents a Google group. For example, admins@example.com.
             - `domain:{domain}`: A G Suite domain (primary, instead of alias) name that represents all the users of that domain. For example, google.com or example.com.
+            - `computed:{identifier}`: An existing key from var.computed_members_map.
           END
+        }
+
+        variable "computed_members_map" {
+          type        = map(string)
+          default     = {}
+          description = <<-END
+             A map of identifiers to identities to be replaced in 'var.members' or in members of `policy_bindings` to handle terraform computed values.
+             The format of each value must satisfy the format as described in `var.members`.
+           END
+          # TODO: terradoc does not allow use of variables in examples
+          # readme_example = <<-END
+          #   members = [
+          #     "user:member@example.com",
+          #     "computed:myserviceaccount",
+          #   ]
+          #   computed_members_map = {
+          #     myserviceaccount = "serviceAccount:${google_service_account.service_account.id}"
+          #   }
+          # END
         }
 
         variable "role" {
           type        = string
           description = <<-END
             The role that should be applied. Note that custom roles must be of the format `[projects|organizations]/{parent-name}/roles/{role-name}`.
-          END
-        }
-
-        variable "project" {
-          type        = string
-          description = <<-END
-            The ID of the project in which the resource belongs. If it is not provided, the project will be parsed from the identifier of the parent resource. If no project is provided in the parent identifier and no project is specified, the provider project is used.
           END
         }
 
@@ -218,8 +231,21 @@ section {
           }
         }
 
+        variable "condition" {
+          type           = object(condition)
+          description    = <<-END
+            An IAM Condition for a given binding.
+          END
+          readme_example = <<-END
+            condition = {
+              expression = "request.time < timestamp(\"2022-01-01T00:00:00Z\")"
+              title      = "expires_after_2021_12_31"
+            }
+          END
+        }
+
         variable "audit_configs" {
-          type = object(audit_config)
+          type           = object(audit_config)
           description    = <<-END
             List of audit logs settings to be enabled.
           END
@@ -227,7 +253,7 @@ section {
             audit_configs = [
               {
                 service = "allServices"
-                configs = [
+                audit_log_configs = [
                   {
                     log_type = "DATA_READ"
                   },
@@ -243,12 +269,15 @@ section {
           END
 
           attribute "service" {
-            required = true
-            type     = string
+            required    = true
+            type        = string
             description = <<-END
               Service which will be enabled for audit logging.
               The special value `allServices` covers all services.
-              Note that if there are `google_organization_iam_audit_config` resources covering both `allServices` and a specific service then the union of the two AuditConfigs is used for that service: the `log_types` specified in each `audit_log_config` are enabled, and the `exempted_members` in each `audit_log_config` are exempted.
+              Note that if there are `audit_configs` covering both `allServices` and a specific service
+              then the union of the two `audit_configs` is used for that service:
+              the `log_types` specified in each `audit_log_config` are enabled,
+              and the `exempted_members` in each `audit_log_config` are exempted.
             END
           }
 

@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Add support for `var.computed_members_map`
+- Add support for audit log in policy bindings
+
+### Removed
+
+- BREAKING: Remove fallback to `var.members` in policy bindings
+- BREAKING: Remove support for Terraform versions before v1.0
+- BREAKING: Remove support for Terraform Google Provider versions before v4.0
+
 ## [0.0.4]
 
 ### Fixed
